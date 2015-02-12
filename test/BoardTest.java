@@ -3,6 +3,8 @@ import exceptions.InvalidMovimentException;
 import exceptions.OutOfBoardException;
 import gamePlace.Board;
 import gamePlace.Position;
+import gamePlay.Game;
+import gamePlay.Player;
 import org.junit.Before;
 import org.junit.Test;
 import pieces.*;
@@ -280,4 +282,25 @@ public class BoardTest {
         new King(Team.WHITE, new Position(3,2), board);
         pawn.move(new Position(3,2));
     }
+
+    @Test
+    public void copyBoard() throws OutOfBoardException, InvalidMovimentException {
+        new Pawn(Team.BLACK, new Position(4,3), board);
+        new King(Team.WHITE, new Position(3,2), board);
+        Board board = this.board.copy();
+        assertTrue(board.isAnyPieceAt(new Position(4,3)));
+        assertTrue(board.isAnyPieceAt(new Position(3,2)));
+        board.deletePiece(new Position(3,2));
+        assertFalse(board.isAnyPieceAt(new Position(3, 2)));
+        assertTrue(this.board.isAnyPieceAt(new Position(3, 2)));
+    }
+
+
+    @Test
+    public void initializingGame() throws OutOfBoardException{
+        new Game(new Player(), new Player(), board);
+        System.out.println(board.getPieceAt(new Position(0,2)));
+        System.out.println(board);
+    }
+
 }

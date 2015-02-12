@@ -39,4 +39,17 @@ public class Knight extends Piece {
         }
         return true;
     }
+
+    @Override
+    public Piece copy(Board board) throws OutOfBoardException {
+        return new Knight(team, position, board);
+    }
+
+
+    @Override
+    public String toString() {
+        if (team == Team.WHITE)
+            return "\u2658";
+        return "\u265E";
+    }
 }

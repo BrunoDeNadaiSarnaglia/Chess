@@ -31,11 +31,7 @@ public class Rook extends Piece {
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();
         int newFile = newPosition.getFile();
-        Piece pieceInNewPosition = board.getPieceAt(newPosition);
-        if(pieceInNewPosition != null && this.getTeam() == pieceInNewPosition.getTeam()){
-            return false;
-        }
-        if(oldRank == newRank && oldFile == newFile){
+        if(isSameTeamOrSamePosition(newPosition)){
             return false;
         }
         if(oldRank != newRank && oldFile != newFile){
@@ -64,5 +60,18 @@ public class Rook extends Piece {
             }
         }
         return false;
+    }
+
+
+    public Piece copy(Board board) throws OutOfBoardException {
+        return new Rook(team, position, board);
+    }
+
+
+    @Override
+    public String toString() {
+        if (team == Team.WHITE)
+            return "\u2656";
+        return "\u265C";
     }
 }

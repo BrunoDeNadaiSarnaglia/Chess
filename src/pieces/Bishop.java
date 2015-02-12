@@ -45,11 +45,7 @@ public class Bishop extends Piece {
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();
         int newFile = newPosition.getFile();
-        Piece pieceInNewPosition = board.getPieceAt(newPosition);
-        if(pieceInNewPosition != null && this.getTeam() == pieceInNewPosition.getTeam()){
-            return false;
-        }
-        if(oldRank == newRank && oldFile == newFile){
+        if(isSameTeamOrSamePosition(newPosition)){
             return false;
         }
         if(abs(oldRank - newRank) != abs(oldFile - newFile)){
@@ -82,5 +78,17 @@ public class Bishop extends Piece {
             }
         }
         return false;
+    }
+
+
+    public Piece copy(Board board) throws OutOfBoardException {
+        return new Bishop(team, position, board);
+    }
+
+    @Override
+    public String toString() {
+        if (team == Team.WHITE)
+            return "\u2657";
+        return "\u265D";
     }
 }

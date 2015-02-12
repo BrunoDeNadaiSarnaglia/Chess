@@ -35,8 +35,6 @@ public abstract class Piece {
         board.putPieceAt(this, position);
     }
 
-
-
     //public abstract void move(Position newPosition) throws OutOfBoardException, InvalidMovimentException;
 
     public void move(Position newPosition) throws OutOfBoardException, InvalidMovimentException {
@@ -54,7 +52,20 @@ public abstract class Piece {
 
     public abstract boolean isValidMoviment(Position newPosition);
 
-
+    protected boolean isSameTeamOrSamePosition(Position newPosition){
+        int oldRank = position.getRank();
+        int oldFile = position.getFile();
+        int newRank = newPosition.getRank();
+        int newFile = newPosition.getFile();
+        Piece pieceInNewPosition = board.getPieceAt(newPosition);
+        if(pieceInNewPosition != null && this.getTeam() == pieceInNewPosition.getTeam()){
+            return true;
+        }
+        if(oldRank == newRank && oldFile == newFile){
+            return true;
+        }
+        return false;
+    }
 
     /**
      * subclass King override this method to return true
@@ -62,4 +73,7 @@ public abstract class Piece {
     public boolean isKing(){
         return false;
     }
+
+
+    public abstract Piece copy(Board board) throws OutOfBoardException;
 }

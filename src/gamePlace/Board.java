@@ -1,6 +1,7 @@
 package gamePlace;
 
 import enumeration.Team;
+import exceptions.OutOfBoardException;
 import pieces.Knight;
 import pieces.Piece;
 
@@ -11,7 +12,7 @@ import java.util.Arrays;
  */
 public class Board {
 
-    private final int boardSize = 8;
+    public final int boardSize = 8;
     private Piece[][] pieces;
 
     public Board() {
@@ -60,12 +61,13 @@ public class Board {
     public String toString() {
         String string = "";
         for (int i = 0; i < boardSize; i++) {
+            string += "|";
             for (int j = 0; j < boardSize; j++) {
                 if(pieces[i][j] == null) {
-                    string += "null";
+                    string += "  |";
                 }
                 else{
-                    string += "alguem";
+                    string += pieces[i][j].toString() + "|";
                 }
             }
             string += "\n";
@@ -78,4 +80,18 @@ public class Board {
         int file = position.getFile();
         pieces[rank][file] = null;
     }
+
+    public Board copy() throws OutOfBoardException {
+        Board board = new Board();
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (isAnyPieceAt(new Position(i,j))){
+                    Piece piece = this.getPieceAt(new Position(i,j));
+                    piece.copy(board);
+                }
+            }
+        }
+        return board;
+    }
+
 }

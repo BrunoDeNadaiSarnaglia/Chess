@@ -20,18 +20,19 @@ public class Queen extends Piece {
         super(team, position, board);
     }
 
-
+    /**
+     * The Queen can move if the move is the same allowed by the Rook
+     * or the Bishop
+     * @param newPosition the new position of the Queen
+     * @return true if the move is allowed, false otherwise
+     */
     @Override
     public boolean isValidMoviment(Position newPosition) {
         int oldRank = position.getRank();
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();
         int newFile = newPosition.getFile();
-        Piece pieceInNewPosition = board.getPieceAt(newPosition);
-        if(pieceInNewPosition != null && this.getTeam() == pieceInNewPosition.getTeam()){
-            return false;
-        }
-        if(oldRank == newRank && oldFile == newFile){
+        if(isSameTeamOrSamePosition(newPosition)){
             return false;
         }
         if(abs(oldRank - newRank) != abs(oldFile - newFile) && oldRank != newRank && oldFile != newFile){
@@ -79,4 +80,15 @@ public class Queen extends Piece {
     }
 
 
+    public Piece copy(Board board) throws OutOfBoardException {
+        return new Queen(team, position, board);
+    }
+
+
+    @Override
+    public String toString() {
+        if (team == Team.WHITE)
+            return "\u2655";
+        return "\u265B";
+    }
 }
