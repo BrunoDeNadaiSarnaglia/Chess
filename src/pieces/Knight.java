@@ -6,6 +6,8 @@ import exceptions.OutOfBoardException;
 import gamePlace.Board;
 import gamePlace.Position;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by Bruno on 2/12/2015.
  */
@@ -31,12 +33,17 @@ public class Knight extends Piece {
         if(pieceInNewPosition != null && this.getTeam() == pieceInNewPosition.getTeam()){
             return false;
         }
+        if(!((abs(oldFile - newFile) == 2 && abs(oldRank - newRank) == 1)
+            || (abs(oldFile - newFile) == 2 && abs(oldRank - newRank) == 1))){
+            return false;
+        }
+       /*
         if((oldFile - newFile == 2 || oldFile - newFile == -2)
                 && (oldRank - newRank != 1 && oldRank - newRank != -1)
                 ||((oldFile - newFile == 1 || oldFile - newFile == -1)
                 && (oldRank - newRank != 2 && oldRank - newRank != -2))){
             return false;
-        }
+        }*/
         return true;
     }
 

@@ -28,4 +28,12 @@ public class Position {
     public int getFile() {
         return file;
     }
+
+    @Override
+    public String toString() {
+        return "(" +
+                 rank +
+                ", " + file +
+                ')';
+    }
 }

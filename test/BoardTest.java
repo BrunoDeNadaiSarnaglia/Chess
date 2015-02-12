@@ -18,6 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class BoardTest {
 
     private Board board;
+    public Game game;
     public Piece knight;
     public Piece rook;
     public Piece bishop;
@@ -25,10 +26,10 @@ public class BoardTest {
     public Piece king;
     public Piece pawn;
 
+
     @Before
     public void settingTest(){
         board = new Board();
-
     }
 
     @Test(expected = OutOfBoardException.class)
@@ -61,6 +62,12 @@ public class BoardTest {
         knight.move(new Position(2, 2));
         assertTrue(board.isAnyPieceAt(new Position(2, 2)));
         assertFalse(board.isAnyPieceAt(new Position(1, 0)));
+    }
+
+    @Test(expected = InvalidMovimentException.class)
+    public void moveKnightWr() throws OutOfBoardException, InvalidMovimentException {
+        knight = new Knight(Team.WHITE, new Position(0,6), board);
+        knight.move(new Position(7, 3));
     }
 
     @Test
@@ -295,12 +302,40 @@ public class BoardTest {
         assertTrue(this.board.isAnyPieceAt(new Position(3, 2)));
     }
 
-
     @Test
     public void initializingGame() throws OutOfBoardException{
         new Game(new Player(), new Player(), board);
-        System.out.println(board.getPieceAt(new Position(0,2)));
-        System.out.println(board);
+//        System.out.println(board);
     }
+
+    @Test
+    public void testIfIsInCheck() throws OutOfBoardException{
+        game = new Game(new Player(), new Player(), board);
+        assertFalse(game.getPlayerBlackKing().isInCheck());
+    }
+
+
+    @Test
+    public void testIfIsInCheckTrue() throws OutOfBoardException{
+        game = new Game(new Player(), new Player(), board);
+        board.deletePiece(new Position(1,3));
+        board.deletePiece(new Position(6,3));
+        board.putPieceAt(new Rook(Team.BLACK, new Position(1,3), board), new Position(1,3));
+//        System.out.print(board);
+        assertTrue(game.getPlayerWhiteKing().isInCheck());
+    }
+    @Test
+    public void testIfIsInCheckTrueMate() throws OutOfBoardException, InvalidMovimentException {
+        game = new Game(new Player(), new Player(), board);
+        board.deletePiece(new Position(1,3));
+        board.deletePiece(new Position(6,3));
+        board.putPieceAt(new Rook(Team.BLACK, new Position(1, 3), board), new Position(1, 3));
+        assertTrue(game.getPlayerWhiteKing().isInCheck());
+        assertTrue(game.isInCheckMate(Team.WHITE));
+        board.getPieceAt(new Position(7,3)).move(new Position(6,3));
+        assertTrue(game.getPlayerWhiteKing().isInCheck());
+        assertFalse(game.isInCheckMate(Team.BLACK));
+    }
+
 
 }

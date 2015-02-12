@@ -12,7 +12,8 @@ import java.util.Arrays;
  */
 public class Board {
 
-    public final int boardSize = 8;
+
+    private final int boardSize = 8;
     private Piece[][] pieces;
 
     public Board() {
@@ -30,6 +31,10 @@ public class Board {
 
     public Piece getPieceAt(int i, int j){
         return pieces[i][j];
+    }
+
+    public int getBoardSize() {
+        return boardSize;
     }
 
     public boolean isOutOfBounds(Position position) {
@@ -60,7 +65,7 @@ public class Board {
     @Override
     public String toString() {
         String string = "";
-        for (int i = 0; i < boardSize; i++) {
+        for (int i = boardSize-1; i >=0 ; i--) {
             string += "|";
             for (int j = 0; j < boardSize; j++) {
                 if(pieces[i][j] == null) {

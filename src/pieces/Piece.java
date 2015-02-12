@@ -14,6 +14,10 @@ public abstract class Piece {
     protected Team team;
     protected Position position;
 
+    public Position getPosition() {
+        return position;
+    }
+
     public Team getTeam() {
         return team;
     }
