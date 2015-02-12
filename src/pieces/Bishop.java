@@ -40,7 +40,7 @@ public class Bishop extends Piece {
      * @param newPosition the new position of the Rook
      * @return true if the Rook can move, false otherwise
      */
-    protected boolean isValidMoviment(Position newPosition) {
+    public boolean isValidMoviment(Position newPosition) {
         int oldRank = position.getRank();
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();

@@ -52,5 +52,14 @@ public abstract class Piece {
         setPosition(newPosition);
     }
 
-    protected abstract boolean isValidMoviment(Position newPosition);
+    public abstract boolean isValidMoviment(Position newPosition);
+
+
+
+    /**
+     * subclass King override this method to return true
+     */
+    public boolean isKing(){
+        return false;
+    }
 }

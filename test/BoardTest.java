@@ -20,7 +20,8 @@ public class BoardTest {
     public Piece rook;
     public Piece bishop;
     public Piece queen;
-
+    public Piece king;
+    public Piece pawn;
 
     @Before
     public void settingTest(){
@@ -190,5 +191,93 @@ public class BoardTest {
         queen = new Queen(Team.WHITE, new Position(4,3), board);
         new Queen(Team.WHITE, new Position(3,4), board);
         queen.move(new Position(2,5));
+    }
+
+    @Test(expected = InvalidMovimentException.class)
+    public void mobeKing() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        king.move(new Position(7,6));
+
+    }
+
+    @Test
+    public void mobeKing2() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        king.move(new Position(4,4));
+        assertTrue(board.isAnyPieceAt(new Position(4,4)));
+        assertFalse(board.isAnyPieceAt(new Position(4, 3)));
+    }
+
+    @Test
+    public void testIfIsKing() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        queen = new Queen(Team.WHITE, new Position(4,5), board);
+        assertTrue(king.isKing());
+        assertFalse(queen.isKing());
+    }
+
+
+    @Test
+    public void movePawn() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.BLACK, new Position(4,3), board);
+        pawn.move(new Position(5,3));
+    }
+
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn2() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.BLACK, new Position(4,3), board);
+        pawn.move(new Position(3,3));
+    }
+
+
+    @Test
+    public void movePawn3() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.WHITE, new Position(4,3), board);
+        pawn.move(new Position(3,3));
+    }
+
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn4() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.WHITE, new Position(4,3), board);
+        pawn.move(new Position(5,3));
+    }
+
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn5() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.WHITE, new Position(4,3), board);
+        pawn.move(new Position(5,2));
+    }
+
+
+    @Test
+    public void movePawn6() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.WHITE, new Position(4,3), board);
+        new King(Team.BLACK, new Position(3,2), board);
+        pawn.move(new Position(3,2));
+    }
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn7() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.WHITE, new Position(4,3), board);
+        new King(Team.WHITE, new Position(3,2), board);
+        pawn.move(new Position(3,2));
+    }
+
+
+    @Test
+    public void movePawn8() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.BLACK, new Position(4,3), board);
+        new King(Team.WHITE, new Position(5,2), board);
+        pawn.move(new Position(5,2));
+    }
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn9() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.BLACK, new Position(4,3), board);
+        new King(Team.WHITE, new Position(3,2), board);
+        pawn.move(new Position(3,2));
     }
 }

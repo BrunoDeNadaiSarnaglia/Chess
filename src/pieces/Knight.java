@@ -22,7 +22,7 @@ public class Knight extends Piece {
      * @param newPosition new position of the Knight
      * @return true if the Knight can be moved, false otherwise
      */
-    protected boolean isValidMoviment(Position newPosition) {
+    public boolean isValidMoviment(Position newPosition) {
         int oldRank = position.getRank();
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();
