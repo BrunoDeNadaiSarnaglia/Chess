@@ -4,6 +4,7 @@ import exceptions.PiecesInThePathException;
 import gamePlace.Board;
 import gamePlace.Position;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.min;
 import static java.lang.Math.max;
 
@@ -17,6 +18,9 @@ public class DiagonalChecker{
         int oldFile = position1.getFile();
         int newRank = position2.getRank();
         int newFile = position2.getFile();
+        if(abs(oldRank - newRank) != abs(oldFile - newFile)){
+            return;
+        }
         if((oldRank - newRank)*(oldFile - newFile) > 0){
             int rank = min(newRank,oldRank) + 1;
             int file = min(newFile,oldFile) + 1;

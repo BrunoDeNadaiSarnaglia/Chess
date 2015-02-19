@@ -22,7 +22,7 @@ public class StraightChecker{
                 if(board.isAnyPieceAt(new Position(oldRank, i)))
                     throw new PiecesInThePathException();
             }
-        }else{
+        }else if(oldFile == newFile){
             for (int i = min(newRank,oldRank) + 1; i < max(newRank,oldRank); i++) {
                 if(board.isAnyPieceAt(new Position(i, oldFile)))
                     throw new PiecesInThePathException();
