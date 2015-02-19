@@ -16,17 +16,13 @@ import pieces.Piece;
  */
 public class PawnTest {
 
-
-
     private Board board;
     public Piece pawn;
-
 
     @Before
     public void settingTest(){
         board = new Board();
     }
-
 
     @Test
     public void movePawn() throws OutOfBoardException, InvalidMovimentException {
@@ -34,13 +30,11 @@ public class PawnTest {
         pawn.move(new Position(5,3));
     }
 
-
     @Test(expected = InvalidMovimentException.class)
     public void movePawn2() throws OutOfBoardException, InvalidMovimentException {
         pawn = new Pawn(Team.BLACK, new Position(4,3), board);
         pawn.move(new Position(3,3));
     }
-
 
     @Test
     public void movePawn3() throws OutOfBoardException, InvalidMovimentException {
@@ -48,20 +42,17 @@ public class PawnTest {
         pawn.move(new Position(3,3));
     }
 
-
     @Test(expected = InvalidMovimentException.class)
     public void movePawn4() throws OutOfBoardException, InvalidMovimentException {
         pawn = new Pawn(Team.WHITE, new Position(4,3), board);
         pawn.move(new Position(5,3));
     }
 
-
     @Test(expected = InvalidMovimentException.class)
     public void movePawn5() throws OutOfBoardException, InvalidMovimentException {
         pawn = new Pawn(Team.WHITE, new Position(4,3), board);
         pawn.move(new Position(5,2));
     }
-
 
     @Test
     public void movePawn6() throws OutOfBoardException, InvalidMovimentException {
@@ -77,11 +68,17 @@ public class PawnTest {
         pawn.move(new Position(3,2));
     }
 
-
     @Test
     public void movePawn8() throws OutOfBoardException, InvalidMovimentException {
         pawn = new Pawn(Team.BLACK, new Position(4,3), board);
         new King(Team.WHITE, new Position(5,2), board);
+        pawn.move(new Position(5,2));
+    }
+
+    @Test
+    public void movePawn82() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.BLACK, new Position(4,3), board);
+        new King(Team.WHITE, new Position(5,4), board);
         pawn.move(new Position(5,2));
     }
 
@@ -91,6 +88,4 @@ public class PawnTest {
         new King(Team.WHITE, new Position(3,2), board);
         pawn.move(new Position(3,2));
     }
-
-
 }

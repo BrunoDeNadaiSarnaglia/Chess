@@ -23,7 +23,6 @@ public class BoardTest {
     public Game game;
     public Piece piece;
 
-
     @Before
     public void settingTest(){
         board = new Board();
@@ -45,10 +44,6 @@ public class BoardTest {
         assertTrue(board.isAnyPieceAt(new Position(1, 0)));
         assertFalse(board.isAnyPieceAt(new Position(0, 0)));
     }
-
-
-
-
 
     @Test
     public void copyBoard() throws OutOfBoardException, InvalidMovimentException {
@@ -74,7 +69,6 @@ public class BoardTest {
         assertFalse(game.getPlayerBlackKing().isInCheck());
     }
 
-
     @Test
     public void testIfIsInCheckTrue() throws OutOfBoardException{
         game = new Game(new Player(), new Player(), board);
@@ -83,5 +77,4 @@ public class BoardTest {
         board.putPieceAt(new Rook(Team.BLACK, new Position(1,3), board), new Position(1,3));
         assertTrue(game.getPlayerWhiteKing().isInCheck());
     }
-
 }

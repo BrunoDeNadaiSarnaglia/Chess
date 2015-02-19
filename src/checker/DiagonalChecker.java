@@ -17,19 +17,21 @@ public class DiagonalChecker{
         int oldFile = position1.getFile();
         int newRank = position2.getRank();
         int newFile = position2.getFile();
-        if((oldRank - newRank)*(oldFile - oldRank) > 0){
+        if((oldRank - newRank)*(oldFile - newFile) > 0){
             int rank = min(newRank,oldRank) + 1;
             int file = min(newFile,oldFile) + 1;
             for (int i = min(newFile,oldFile) + 1; i < max(newFile, oldFile); i++, rank++, file++) {
-                if(board.isAnyPieceAt(new Position(rank, file)))
+                if(board.isAnyPieceAt(new Position(rank, file))) {
                     throw new PiecesInThePathException();
+                }
             }
         }else{
             int rank = min(newRank,oldRank) + 1;
             int file = max(newFile, oldFile) - 1;
             for (int i = min(newRank,oldRank) + 1; i < max(newRank,oldRank); i++, rank++, file--) {
-                if(board.isAnyPieceAt(new Position(rank, file)))
+                if(board.isAnyPieceAt(new Position(rank, file))) {
                     throw new PiecesInThePathException();
+                }
             }
         }
     }

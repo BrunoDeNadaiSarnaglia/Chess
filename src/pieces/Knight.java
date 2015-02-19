@@ -36,7 +36,7 @@ public class Knight extends Piece {
             return false;
         }
         if(!((abs(oldFile - newFile) == 2 && abs(oldRank - newRank) == 1)
-            || (abs(oldFile - newFile) == 2 && abs(oldRank - newRank) == 1))){
+            || (abs(oldFile - newFile) == 1 && abs(oldRank - newRank) == 2))){
             return false;
         }
        /*
