@@ -89,14 +89,15 @@ public class Game {
         return getPlayerWhiteKing();
     }
 
-    public boolean isInCheckMate(Team team) throws OutOfBoardException {
+    public boolean isInCheckMate(Team team) throws OutOfBoardException, InvalidMovimentException {
         King king = getKing(team);
         if(!king.isInCheck()){
             return false;
         }
         if (movingKingCanIEscape(team))
             return false;
-
+        /*if(killingOppCanIEscape(team))
+            return false;*/
         /*int rank = king.getPosition().getRank();
         int file = king.getPosition().getFile();
         for (int i = -1; i <= 1 ; i++) {
@@ -120,15 +121,22 @@ public class Game {
         King king = getKing(team);
         int rank = king.getPosition().getRank();
         int file = king.getPosition().getFile();
+        System.out.print("king position:" + king.getPosition());
         for (int i = -1; i <= 1 ; i++) {
             for (int j = -1; j <= 1; j++) {
+
+                System.out.print(new Position(rank + i, file + j));
                 Game game = this.copy();
                 king = game.getKing(team);
+                System.out.print(king.getPosition());
                 try{
-                    king.move(new Position(rank + i, file + i));
+                    System.out.print(new Position(rank + i, file + j));
+                    king.move(new Position(rank + i, file + j));
+                    System.out.print(new Position(rank + i, file + j));
                     if(!king.isInCheck())
                         return true;
                 } catch (InvalidMovimentException e) {
+                    System.out.print("brunuo");
                 } catch (OutOfBoardException e) {
 
                 }
@@ -137,9 +145,27 @@ public class Game {
         return false;
     }
 
-    private boolean killingOppCanIEscape(Team team) throws OutOfBoardException {
+    private boolean killingOppCanIEscape(Team team) throws OutOfBoardException, InvalidMovimentException {
         King king = getKing(team);
-        Piece piece = king.piecePuttingInCheck();
+        Piece checkPiece = king.piecePuttingInCheck();
+        Board board = this.board.copy();
+        Position checkPiecePosition = checkPiece.getPosition();
+        Team checkPieceTeam = checkPiece.getTeam();
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                Position position = new Position(i,j);
+                if(board.isAnyPieceAt(position)){
+                    Piece piece = board.getPieceAt(position);
+                    if(checkPieceTeam != piece.getTeam() && piece.isValidMoviment(checkPiecePosition)) {
+                        Game game = this.copy();
+                        game.getBoard().getPieceAt(position).move(checkPiecePosition);
+                        if(!game.getKing(team).isInCheck())
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public Game copy() throws OutOfBoardException {
