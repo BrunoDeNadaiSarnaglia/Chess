@@ -1,10 +1,14 @@
 package view;
 
+import enumeration.Team;
+import exceptions.InvalidMovimentException;
+import exceptions.InvalidPlayException;
 import exceptions.OutOfBoardException;
 import gamePlace.Board;
 import gamePlace.Position;
 import gamePlay.Game;
 import gamePlay.Player;
+import pieces.InventedChessPieces.DifferentKnight;
 import pieces.Piece;
 
 import javax.swing.*;
@@ -23,11 +27,23 @@ public class ChessInterface {
     private static Game game;
     private static Board board;
 
+
+
+    /**
+     * Constructor that will instantiate JComponents
+     * and organize them into mainPanel
+     * @param game that these JFrame will present
+     */
     public ChessInterface(Game game) {
         this.game = game;
         this.board = game.getBoard();
         createGUI();
     }
+
+    /**
+     * method that instantiate JComponents used
+     * in the GUI
+     */
 
     private static void createGUI(){
         panel = new JPanel(new GridLayout(0, board.getBoardSize()+2));
@@ -60,6 +76,9 @@ public class ChessInterface {
         fillPanel();
     }
 
+    /**
+     * Add JComponents in the mainPanel
+     */
     public static void fillPanel(){
         for(int i = 0; i < board.getBoardSize()+2; i++){
             panel.add(new JLabel(""));
@@ -85,6 +104,11 @@ public class ChessInterface {
         return mainPanel;
     }
 
+    /**
+     * Update all text presented in each JButton label with
+     * Unicode of the element in this position
+     */
+
     private void updateLabels(){
         for (int i = 0; i < board.getBoardSize(); i++) {
             for (int j = 0; j < board.getBoardSize(); j++) {
@@ -96,6 +120,10 @@ public class ChessInterface {
             }
         }
     }
+
+    /**
+     * Method to show the JFrame, not working yet
+     */
 
     public void show(){
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -125,6 +153,11 @@ public class ChessInterface {
         });
     }
 
+    /**
+     * Main will display the JFrame of the current
+     * Chess state
+     */
+
     public static void main(String[] args) throws OutOfBoardException {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -137,7 +170,6 @@ public class ChessInterface {
                 try {
                     game.initializeBoard();
                 } catch (OutOfBoardException e) {
-                    e.printStackTrace();
                 }
                 ChessInterface chessInterface = new ChessInterface(game);
                 chessInterface.updateLabels();

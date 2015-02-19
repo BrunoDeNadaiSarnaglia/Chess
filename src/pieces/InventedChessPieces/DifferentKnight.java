@@ -17,9 +17,24 @@ public class DifferentKnight extends Piece{
         super(team);
     }
 
+    /**
+     * Constructor that
+     * @param team the team of the DifferentKnight
+     * @param position the position of the DifferentKnight
+     * @param board the board which DifferentKnight will be inserted
+     */
+
     public DifferentKnight(Team team, Position position, Board board) throws OutOfBoardException {
         super(team, position, board);
     }
+
+    /**
+     * A DifferentKnight can be moved:
+     * Can make two steps in the column, row and diagonal
+     * it can overlap pieces two
+     * @param newPosition the new position of the DifferentKnight
+     * @return true if the Pawn can be moved, false otherwise
+     */
 
     @Override
     public boolean isValidMoviment(Position newPosition) {
@@ -38,6 +53,13 @@ public class DifferentKnight extends Piece{
         }
         return true;
     }
+
+
+    /**
+     * Method which create a new instance of DifferentKnight
+     * @param board the board of the new instance
+     * @return a new piece instance exactly equal to this one
+     */
 
     @Override
     public Piece copy(Board board) throws OutOfBoardException {

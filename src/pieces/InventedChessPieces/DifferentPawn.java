@@ -17,10 +17,25 @@ public class DifferentPawn extends Piece {
         super(team);
     }
 
+    /**
+     * Constructor that
+     * @param team the team of the DifferentPawn
+     * @param position the position of the DifferentPawn
+     * @param board the board which DifferentPawn will be inserted
+     */
+
     public DifferentPawn(Team team, Position position, Board board) throws OutOfBoardException {
         super(team, position, board);
     }
 
+
+    /**
+     * A Different Pawn can be moved:
+     * one step in the column if empty
+     * diagonal if opponent there
+     * @param newPosition the new position of the DifferentPawn
+     * @return true if the Pawn can be moved, false otherwise
+     */
     @Override
     public boolean isValidMoviment(Position newPosition) {
         int oldRank = position.getRank();
@@ -41,6 +56,11 @@ public class DifferentPawn extends Piece {
         return true;
     }
 
+    /**
+     * Method which create a new instance of DifferentPawn
+     * @param board the board of the new instance
+     * @return a new piece instance exactly equal to this one
+     */
     @Override
     public Piece copy(Board board) throws OutOfBoardException {
         return new DifferentPawn(team, new Position(position), board);
