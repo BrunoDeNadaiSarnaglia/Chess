@@ -12,12 +12,13 @@ import static java.lang.Math.abs;
  */
 public class Pawn extends Piece {
 
-
     public Pawn(Team team, Position position, Board board) throws OutOfBoardException {
         super(team, position, board);
     }
 
-
+    public Pawn(Team team) {
+        super(team);
+    }
 
     /**
      * A Pawn can be moved:

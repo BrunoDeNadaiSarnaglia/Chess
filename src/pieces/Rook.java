@@ -1,8 +1,10 @@
 package pieces;
 
+import checker.StraightChecker;
 import enumeration.Team;
 import exceptions.InvalidMovimentException;
 import exceptions.OutOfBoardException;
+import exceptions.PiecesInThePathException;
 import gamePlace.Board;
 import gamePlace.Position;
 
@@ -19,7 +21,9 @@ public class Rook extends Piece {
         super(team, position, board);
     }
 
-
+    public Rook(Team team) {
+        super(team);
+    }
 
     /**
      * The Rook can move any number of squares along any rank or file
@@ -44,7 +48,14 @@ public class Rook extends Piece {
     }
 
     private boolean ArePiecesInPath(Position newPosition){
-        int oldRank = position.getRank();
+
+        try {
+            StraightChecker.check(position, newPosition, board);
+        } catch (PiecesInThePathException e) {
+            return true;
+        }
+        return false;
+        /*int oldRank = position.getRank();
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();
         int newFile = newPosition.getFile();
@@ -59,7 +70,7 @@ public class Rook extends Piece {
                     return true;
             }
         }
-        return false;
+        return false;*/
     }
 
 

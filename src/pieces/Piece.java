@@ -11,8 +11,27 @@ import gamePlace.Position;
  */
 public abstract class Piece {
 
-    protected Team team;
-    protected Position position;
+    protected Team team = null;
+    protected Position position = null;
+    protected Board board;
+
+    protected Piece(Team team){
+        this.team = team;
+    }
+
+    protected Piece(Team team, Position position, Board board) throws OutOfBoardException {
+        this.team = team;
+        this.position = position;
+        this.board = board;
+        if(board.isOutOfBounds(position)){
+            throw new OutOfBoardException();
+        }
+        board.putPieceAt(this, position);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
 
     public Position getPosition() {
         return position;
@@ -27,19 +46,13 @@ public abstract class Piece {
         this.position.setFile(position.getFile());
     }
 
-    protected Board board;
-
-    protected Piece(Team team, Position position, Board board) throws OutOfBoardException {
+    public void setTeam(Team team) {
         this.team = team;
-        this.position = position;
-        this.board = board;
-        if(board.isOutOfBounds(position)){
-            throw new OutOfBoardException();
-        }
-        board.putPieceAt(this, position);
     }
 
-    //public abstract void move(Position newPosition) throws OutOfBoardException, InvalidMovimentException;
+    public void setBoard(Board board) {
+        this.board = board;
+    }
 
     public void move(Position newPosition) throws OutOfBoardException, InvalidMovimentException {
         if(board.isOutOfBounds(newPosition)){

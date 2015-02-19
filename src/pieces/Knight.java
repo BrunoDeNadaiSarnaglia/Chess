@@ -13,11 +13,13 @@ import static java.lang.Math.abs;
  */
 public class Knight extends Piece {
 
-
     public Knight(Team team, Position position, Board board) throws OutOfBoardException {
         super(team, position, board);
     }
 
+    public Knight(Team team) {
+        super(team);
+    }
 
     /**
      * A Knight can move forming an L-shape movement

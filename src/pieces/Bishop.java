@@ -1,8 +1,10 @@
 package pieces;
 
+import checker.DiagonalChecker;
 import enumeration.Team;
 import exceptions.InvalidMovimentException;
 import exceptions.OutOfBoardException;
+import exceptions.PiecesInThePathException;
 import gamePlace.Board;
 import gamePlace.Position;
 
@@ -15,9 +17,12 @@ import static java.lang.Math.min;
  */
 public class Bishop extends Piece {
 
-
     public Bishop(Team team, Position position, Board board) throws OutOfBoardException {
         super(team, position, board);
+    }
+
+    public Bishop(Team team) {
+        super(team);
     }
 
     @Override
@@ -58,6 +63,15 @@ public class Bishop extends Piece {
     }
 
     private boolean ArePiecesInPath(Position newPosition){
+        try {
+            DiagonalChecker.check(position, newPosition, board);
+        } catch (PiecesInThePathException e) {
+            return true;
+        }
+        return false;
+    }
+
+/*    private boolean ArePiecesInPath(Position newPosition){
         int oldRank = position.getRank();
         int oldFile = position.getFile();
         int newRank = newPosition.getRank();
@@ -78,7 +92,7 @@ public class Bishop extends Piece {
             }
         }
         return false;
-    }
+    }*/
 
 
     public Piece copy(Board board) throws OutOfBoardException {

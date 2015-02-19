@@ -1,3 +1,5 @@
+package gamePlaceTests;
+
 import enumeration.Team;
 import exceptions.InvalidMovimentException;
 import exceptions.OutOfBoardException;

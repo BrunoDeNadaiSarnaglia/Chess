@@ -13,9 +13,12 @@ import static java.lang.Math.abs;
  */
 public class King extends Piece {
 
-
     public King(Team team, Position position, Board board) throws OutOfBoardException {
         super(team, position, board);
+    }
+
+    public King(Team team) {
+        super(team);
     }
 
     /**
