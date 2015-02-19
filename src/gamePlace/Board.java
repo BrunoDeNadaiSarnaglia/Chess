@@ -37,19 +37,6 @@ public class Board {
         return boardSize;
     }
 
-    public boolean isOutOfBounds(Position position) {
-        int rank = position.getRank();
-        int file = position.getFile();
-        if((rank >= 0 && rank < boardSize) && (file >= 0 && file < boardSize)){
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isAnyPieceAt(Position position){
-        return (getPieceAt(position) != null);
-    }
-
     public void putPieceAt(Piece piece, Position position) {
         int rank = position.getRank();
         int file = position.getFile();
@@ -60,6 +47,25 @@ public class Board {
         int rank = position.getRank();
         int file = position.getFile();
         return getPieceAt(rank, file);
+    }
+
+    public boolean isOutOfBounds(Position position) {
+        int rank = position.getRank();
+        int file = position.getFile();
+        if((rank >= 0 && rank < boardSize) && (file >= 0 && file < boardSize)){
+            return false;
+        }
+        return true;
+    }
+
+    public void deletePiece(Position position) {
+        int rank = position.getRank();
+        int file = position.getFile();
+        pieces[rank][file] = null;
+    }
+
+    public boolean isAnyPieceAt(Position position){
+        return (getPieceAt(position) != null);
     }
 
     @Override
@@ -78,12 +84,6 @@ public class Board {
             string += "\n";
         }
         return string;
-    }
-
-    public void deletePiece(Position position) {
-        int rank = position.getRank();
-        int file = position.getFile();
-        pieces[rank][file] = null;
     }
 
     public Board copy() throws OutOfBoardException {

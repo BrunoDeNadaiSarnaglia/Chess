@@ -7,9 +7,7 @@ import gamePlace.Board;
 import gamePlace.Position;
 import org.junit.Before;
 import org.junit.Test;
-import pieces.King;
-import pieces.Piece;
-import pieces.Queen;
+import pieces.*;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class KingTest {
 
     private Board board;
-    private Piece king;
+    private King king;
     private Piece queen;
 
     @Before
@@ -155,5 +153,92 @@ public class KingTest {
         queen = new Queen(Team.WHITE, new Position(4,5), board);
         assertTrue(king.isKing());
         assertFalse(queen.isKing());
+    }
+
+    @Test
+    public void kingInCheck1() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Rook(Team.BLACK, new Position(4,5), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck2() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Rook(Team.BLACK, new Position(3,5), board);
+        assertFalse(king.isInCheck());
+    }
+
+
+    @Test
+    public void kingInCheck3() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Rook(Team.WHITE, new Position(4,5), board);
+        assertFalse(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck4() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Queen(Team.BLACK, new Position(4,5), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck5() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Queen(Team.BLACK, new Position(5,4), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck6() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Bishop(Team.BLACK, new Position(3,4), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck7() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece = new Knight(Team.BLACK, new Position(3,5), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck8() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece1 = new Knight(Team.BLACK, new Position(3,5), board);
+        Piece piece2 = new Knight(Team.BLACK, new Position(0,0), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck9() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece1 = new Pawn(Team.BLACK, new Position(3,3), board);
+        assertFalse(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck10() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece1 = new Pawn(Team.BLACK, new Position(3,2), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck11() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        Piece piece1 = new King(Team.BLACK, new Position(3,2), board);
+        assertTrue(king.isInCheck());
+    }
+
+    @Test
+    public void kingInCheck12() throws OutOfBoardException, InvalidMovimentException {
+        king = new King(Team.WHITE, new Position(4,3), board);
+        new King(Team.BLACK, new Position(2,2), board);
+        new King(Team.BLACK, new Position(4,1), board);
+        assertFalse(king.isInCheck());
     }
 }

@@ -41,7 +41,8 @@ public class Pawn extends Piece {
         if(isSameTeamOrSamePosition(newPosition)){
             return false;
         }
-        if(!((team == Team.BLACK && newRank - oldRank == 1 || team == Team.WHITE && newRank - oldRank == -1)
+        if(!((team == Team.BLACK && newRank - oldRank == 1 && pieceInNewPosition == null
+                || team == Team.WHITE && newRank - oldRank == -1 && pieceInNewPosition == null)
                 || ((pieceInNewPosition != null && this.getTeam() != pieceInNewPosition.getTeam()) &&
                 ((team == Team.BLACK && newRank - oldRank == 1 && abs(newFile - oldFile) == 1)
                         || (team == Team.WHITE && newRank - oldRank == -1 && abs(newFile - oldFile) == 1))))){

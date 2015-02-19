@@ -88,4 +88,18 @@ public class PawnTest {
         new King(Team.WHITE, new Position(3,2), board);
         pawn.move(new Position(3,2));
     }
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn10() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.BLACK, new Position(4,3), board);
+        new King(Team.WHITE, new Position(5,3), board);
+        pawn.move(new Position(5,3));
+    }
+
+    @Test(expected = InvalidMovimentException.class)
+    public void movePawn11() throws OutOfBoardException, InvalidMovimentException {
+        pawn = new Pawn(Team.WHITE, new Position(4,3), board);
+        new King(Team.BLACK, new Position(3,3), board);
+        pawn.move(new Position(3,3));
+    }
 }

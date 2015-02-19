@@ -13,15 +13,6 @@ import pieces.*;
 public class Game {
 
     private Player playerBlack;
-
-    public King getPlayerWhiteKing() {
-        return playerWhiteKing;
-    }
-
-    public King getPlayerBlackKing() {
-        return playerBlackKing;
-    }
-
     private King playerBlackKing;
     private Player playerWhite;
     private King playerWhiteKing;
@@ -80,6 +71,14 @@ public class Game {
         new Bishop(Team.WHITE, new Position(7,5), board);
         new Knight(Team.WHITE, new Position(7,6), board);
         new Rook(Team.WHITE, new Position(7,7), board);
+    }
+
+    public King getPlayerWhiteKing() {
+        return playerWhiteKing;
+    }
+
+    public King getPlayerBlackKing() {
+        return playerBlackKing;
     }
 
     public King getKing(Team team){
