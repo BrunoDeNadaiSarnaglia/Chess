@@ -62,7 +62,7 @@ public class Queen extends Piece {
 
 
     public Piece copy(Board board) throws OutOfBoardException {
-        return new Queen(team, position, board);
+        return new Queen(team, new Position(position), board);
     }
 
 

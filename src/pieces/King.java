@@ -42,28 +42,11 @@ public class King extends Piece {
         return true;
     }
 
-
-
     public boolean isKing(){
         return true;
     }
 
     public boolean isInCheck() throws OutOfBoardException {
-        /*Board board = this.board.copy();
-        Position kingPosition = getPosition();
-        Team kingTeam = getTeam();
-        for (int i = 0; i < board.getBoardSize(); i++) {
-            for (int j = 0; j < board.getBoardSize(); j++) {
-                Position position = new Position(i,j);
-                if(board.isAnyPieceAt(position)){
-                    Piece piece = board.getPieceAt(position);
-                    if(kingTeam != piece.getTeam() && piece.isValidMoviment(kingPosition)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;*/
         return (piecePuttingInCheck() != null);
     }
 
@@ -86,9 +69,8 @@ public class King extends Piece {
     }
 
     public Piece copy(Board board) throws OutOfBoardException {
-        return new King(team, position, board);
+        return new King(team, new Position(position), board);
     }
-
 
     @Override
     public String toString() {

@@ -96,7 +96,7 @@ public class Bishop extends Piece {
 
 
     public Piece copy(Board board) throws OutOfBoardException {
-        return new Bishop(team, position, board);
+        return new Bishop(team, new Position(position), board);
     }
 
     @Override

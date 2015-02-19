@@ -2,6 +2,7 @@ package gamePlay;
 
 import enumeration.Team;
 import exceptions.InvalidMovimentException;
+import exceptions.InvalidPlayException;
 import exceptions.OutOfBoardException;
 import gamePlace.Board;
 import gamePlace.Position;
@@ -27,10 +28,11 @@ public class Game {
         this.playerBlack = playerBlack;
         this.playerWhite = playerWhite;
         this.board = board;
-        initializeBoard();
+        this.playerBlackKing = null;
+        this.playerWhiteKing = null;
     }
 
-    private void initializeBoard() throws OutOfBoardException {
+    public void initializeBoard() throws OutOfBoardException {
         initializeBlackTeam();
         initializeWhiteTeam();
     }
@@ -73,12 +75,12 @@ public class Game {
         new Rook(Team.WHITE, new Position(7,7), board);
     }
 
-    public King getPlayerWhiteKing() {
-        return playerWhiteKing;
-    }
-
     public King getPlayerBlackKing() {
         return playerBlackKing;
+    }
+
+    public King getPlayerWhiteKing() {
+        return playerWhiteKing;
     }
 
     public King getKing(Team team){
@@ -88,6 +90,58 @@ public class Game {
         return getPlayerWhiteKing();
     }
 
+    public void setPlayerBlackKing(King playerBlackKing) {
+        this.playerBlackKing = playerBlackKing;
+    }
+
+    public void setPlayerWhiteKing(King playerWhiteKing) {
+        this.playerWhiteKing = playerWhiteKing;
+    }
+
+    public void move(Position oldPosition, Position newPosition) throws OutOfBoardException, InvalidPlayException, InvalidMovimentException {
+        if(board.isOutOfBounds(oldPosition) || board.isOutOfBounds(newPosition)){
+            throw new OutOfBoardException();
+        }
+        Piece piece = board.getPieceAt(oldPosition);
+        if(piece == null){
+            throw new InvalidPlayException();
+        }
+        piece.move(newPosition);
+    }
+
+    public boolean isInCheckMate(Team team) throws OutOfBoardException {
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                Piece piece = board.getPieceAt(i,j);
+                if(piece != null && piece.getTeam() == team && !movingPieceIsInCheck(new Position(i,j) ,team))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean movingPieceIsInCheck(Position position, Team team) throws OutOfBoardException {
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                Game game = this.copy();
+                try {
+                    game.move(position, new Position(i,j));
+                    King king = game.getKing(team);
+                    if(king != null && !king.isInCheck()) {
+                        System.out.println(position);
+                        System.out.println(new Position(i,j));
+                        System.out.println(game.getBoard());
+                        return false;
+                    }
+                } catch (InvalidPlayException e) {
+                } catch (InvalidMovimentException e) {
+                } catch (OutOfBoardException e) {
+                }
+            }
+        }
+        return true;
+    }
+/*
     public boolean isInCheckMate(Team team) throws OutOfBoardException, InvalidMovimentException {
         King king = getKing(team);
         if(!king.isInCheck()){
@@ -95,9 +149,12 @@ public class Game {
         }
         if (movingKingCanIEscape(team))
             return false;
-        /*if(killingOppCanIEscape(team))
-            return false;*/
-        /*int rank = king.getPosition().getRank();
+        */
+/*if(killingOppCanIEscape(team))
+            return false;*//*
+
+        */
+/*int rank = king.getPosition().getRank();
         int file = king.getPosition().getFile();
         for (int i = -1; i <= 1 ; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -112,7 +169,8 @@ public class Game {
 
                 }
             }
-        }*/
+        }*//*
+
         return true;
     }
 
@@ -166,8 +224,23 @@ public class Game {
         }
         return false;
     }
+*/
 
     public Game copy() throws OutOfBoardException {
-        return new Game(playerBlack.copy(), playerWhite.copy(), board.copy());
+        Game game = new Game(playerBlack.copy(), playerWhite.copy(), board.copy());
+        Board board = game.getBoard();
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                Piece piece = board.getPieceAt(i,j);
+                if(piece != null && piece.isKing()){
+                    if(piece.getTeam() == Team.BLACK){
+                        game.setPlayerBlackKing((King) piece);
+                    }else{
+                        game.setPlayerWhiteKing((King) piece);
+                    }
+                }
+            }
+        }
+        return game;
     }
 }

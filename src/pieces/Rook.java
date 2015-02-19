@@ -75,7 +75,7 @@ public class Rook extends Piece {
 
 
     public Piece copy(Board board) throws OutOfBoardException {
-        return new Rook(team, position, board);
+        return new Rook(team, new Position(position), board);
     }
 
 

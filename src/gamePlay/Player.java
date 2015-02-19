@@ -6,6 +6,6 @@ package gamePlay;
 public class Player {
 
     public Player copy(){
-        return null;
+        return new Player();
     }
 }

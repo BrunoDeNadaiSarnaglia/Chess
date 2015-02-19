@@ -51,7 +51,7 @@ public class Knight extends Piece {
 
     @Override
     public Piece copy(Board board) throws OutOfBoardException {
-        return new Knight(team, position, board);
+        return new Knight(team, new Position(position), board);
     }
 
 

@@ -13,6 +13,11 @@ public class Position {
         this.file = file;
     }
 
+    public Position(Position position) {
+        this.rank = position.getRank();
+        this.file = position.getFile();
+    }
+
     public int getRank() {
         return rank;
     }

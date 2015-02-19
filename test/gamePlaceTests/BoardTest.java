@@ -66,12 +66,14 @@ public class BoardTest {
     @Test
     public void testIfIsInCheck() throws OutOfBoardException{
         game = new Game(new Player(), new Player(), board);
+        game.initializeBoard();
         assertFalse(game.getPlayerBlackKing().isInCheck());
     }
 
     @Test
     public void testIfIsInCheckTrue() throws OutOfBoardException{
         game = new Game(new Player(), new Player(), board);
+        game.initializeBoard();
         board.deletePiece(new Position(1,3));
         board.deletePiece(new Position(6,3));
         board.putPieceAt(new Rook(Team.BLACK, new Position(1,3), board), new Position(1,3));
