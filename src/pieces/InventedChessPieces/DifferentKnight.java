@@ -47,7 +47,7 @@ public class DifferentKnight extends Piece{
     @Override
     public String toString() {
         if (team == Team.WHITE)
-            return "DKW";
-        return "DKB";
+            return "W";
+        return "B";
     }
 }

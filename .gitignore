@@ -5,6 +5,11 @@
 
 .idea/
 out/
+html/
+latex/
+Doxygen
+Doxygen.bak
+doxygen
 
 # Package Files #
 *.jar

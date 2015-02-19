@@ -49,7 +49,7 @@ public class DifferentPawn extends Piece {
     @Override
     public String toString() {
         if (team == Team.WHITE)
-            return "DPW";
-        return "DPB";
+            return "w";
+        return "b";
     }
 }
