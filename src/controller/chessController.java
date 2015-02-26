@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 
 /**
  * Created by Bruno on 2/26/2015.
+ * Innitialize handles for some JComponents in the GUI
  */
 public class chessController {
 
@@ -31,6 +32,11 @@ public class chessController {
     private static int firstFile;
     private static GameTracker gameTracker = new GameTracker();
 
+    /**
+     * Constructor that initializes game and board
+     * @param game
+     */
+
     public chessController(Game game) {
         this.game = game;
         this.board = game.getBoard();
@@ -41,14 +47,21 @@ public class chessController {
         }
     }
 
+    /**
+     * Change the game that this class is controlling
+     * @param game
+     */
+
     public static void setGame(Game game) {
         chessController.game = game;
         board = game.getBoard();
-        /*try {
-            gameTracker.addUndo(game.copy());
-        } catch (OutOfBoardException e) {
-        }*/
     }
+
+    /**
+     * Take each button in the matrix and defines its method.
+     * There are 3 overriden methods for each button
+     * MouseEntered, MouseExited, MouseClicked
+     */
 
     private static void defineButtonsReactions(){
         for (int i = 0; i < board.getBoardSize(); i++) {
@@ -58,6 +71,10 @@ public class chessController {
                 final int file= j;
                 button.addMouseListener(new MouseAdapter() {
 
+                    /**
+                     * If the piece belong to the current team playing, this handle will change the jButton collor
+                     * @param e
+                     */
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         if(board.isAnyPieceAt(new Position(rank, file))){
@@ -68,6 +85,11 @@ public class chessController {
                         }
                     }
 
+
+                    /**
+                     * when mouseExited this method will restore the jButtons colors
+                     * @param e
+                     */
                     @Override
                     public void mouseExited(MouseEvent e) {
                         if(!(isSelected && file == firstFile && rank == firstRank) ){
@@ -78,6 +100,13 @@ public class chessController {
                             }
                         }
                     }
+
+                    /**
+                     * When we click in a jButton, this method will test if there is any old position selected
+                     * and if not will test if it is a piece where we a clicking and if there is any old position
+                     * selected, will test if is a valid movement and will execute movement
+                     * @param e
+                     */
 
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -142,7 +171,9 @@ public class chessController {
         }
     }
 
-
+    /**
+     * method used in restart jButton to restart the game
+     */
 
     public static void restart(){
         try {
@@ -158,7 +189,15 @@ public class chessController {
         }
     }
 
+    /**
+     * Will define the handle for the jButtons  in the toolbar
+     */
+
     private static void setMenuActions(){
+
+        /**
+         * restart the game
+         */
         chessInterface.getRestart().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -168,6 +207,11 @@ public class chessController {
                 }
             }
         );
+
+        /**
+         * Get what was the game state in the past using gametracker class and update
+         * The game that controller is using
+         */
         chessInterface.getUndo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -180,6 +224,12 @@ public class chessController {
                 chessInterface.updateLabels();
             }
         });
+
+
+        /**
+         * Get what was the game that we undid using gametracker class and update
+         * The game that controller is using
+         */
         chessInterface.getRedo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -193,6 +243,11 @@ public class chessController {
             }
         });
     }
+
+    /**
+     * Main will pop up the JFrame
+     * @param args
+     */
 
     public static void main(String[] args){
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
