@@ -17,6 +17,7 @@ public class Game {
     private King playerBlackKing;
     private Player playerWhite;
     private King playerWhiteKing;
+    private Team teamPlaying = Team.WHITE;
 
     public Board getBoard() {
         return board;
@@ -75,6 +76,10 @@ public class Game {
         new Rook(Team.WHITE, new Position(7,7), board);
     }
 
+    public Team getTeamPlaying() {
+        return teamPlaying;
+    }
+
     public King getPlayerBlackKing() {
         return playerBlackKing;
     }
@@ -106,7 +111,18 @@ public class Game {
         if(piece == null){
             throw new InvalidPlayException();
         }
-        piece.move(newPosition);
+        try {
+            piece.move(newPosition);
+        }catch (Exception e){
+        }
+        changeTeamPlaying();
+    }
+
+    public void changeTeamPlaying(){
+        if(teamPlaying == Team.WHITE)
+            teamPlaying = Team.BLACK;
+        else
+            teamPlaying = Team.WHITE;
     }
 
     public boolean isInCheckMate(Team team) throws OutOfBoardException {

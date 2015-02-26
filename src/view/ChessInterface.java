@@ -21,11 +21,14 @@ import java.awt.*;
  */
 public class ChessInterface {
 
-    private static JPanel mainPanel = new JPanel();
+    private static JPanel mainPanel;
     private static JPanel panel;
     private static JButton[][] boardOfButtons;
     private static Game game;
     private static Board board;
+    private static JButton restart = new JButton("Restart");
+    private static JButton undo = new JButton("Undo");
+    private static JButton redo = new JButton("redo");
 
 
 
@@ -46,10 +49,12 @@ public class ChessInterface {
      */
 
     private static void createGUI(){
+        mainPanel = new JPanel(new BorderLayout(0, board.getBoardSize()+2));
         panel = new JPanel(new GridLayout(0, board.getBoardSize()+2));
         boardOfButtons = new JButton[board.getBoardSize()][board.getBoardSize()];
         mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         panel.setBorder(new LineBorder(Color.BLACK));
+        initializeToolbars();
         mainPanel.add(panel);
         Color black = new Color(195, 214, 214);
         Color white = new Color(142, 156, 156);
@@ -74,6 +79,19 @@ public class ChessInterface {
             }
         }
         fillPanel();
+    }
+
+    /**
+     * Initialize toolbars for the game
+     */
+    private static void initializeToolbars(){
+        JToolBar toolBar = new JToolBar();
+        toolBar.add(restart);
+        toolBar.add(undo);
+        toolBar.add(redo);
+        toolBar.setFloatable(false);
+        mainPanel.add(toolBar, BorderLayout.PAGE_START);
+
     }
 
     /**
@@ -104,12 +122,18 @@ public class ChessInterface {
         return mainPanel;
     }
 
+    public JButton getJButton(Position position){
+        int rank = position.getRank();
+        int file = position.getFile();
+        return boardOfButtons[rank][file];
+    }
+
     /**
      * Update all text presented in each JButton label with
      * Unicode of the element in this position
      */
 
-    private void updateLabels(){
+    public void updateLabels(){
         for (int i = 0; i < board.getBoardSize(); i++) {
             for (int j = 0; j < board.getBoardSize(); j++) {
                 if(board.isAnyPieceAt(new Position(i,j))){
@@ -120,10 +144,13 @@ public class ChessInterface {
             }
         }
     }
+/*
 
-    /**
+    */
+/**
      * Method to show the JFrame, not working yet
-     */
+     *//*
+
 
     public void show(){
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -152,6 +179,7 @@ public class ChessInterface {
             }
         });
     }
+*/
 
     /**
      * Main will display the JFrame of the current
