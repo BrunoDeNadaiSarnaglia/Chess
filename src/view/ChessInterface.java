@@ -43,6 +43,27 @@ public class ChessInterface {
         createGUI();
     }
 
+    public JButton getRestart() {
+        return restart;
+    }
+
+    public JButton getUndo() {
+        return undo;
+    }
+
+    public JButton getRedo() {
+        return redo;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+        this.board = game.getBoard();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
     /**
      * method that instantiate JComponents used
      * in the GUI
@@ -136,10 +157,12 @@ public class ChessInterface {
     public void updateLabels(){
         for (int i = 0; i < board.getBoardSize(); i++) {
             for (int j = 0; j < board.getBoardSize(); j++) {
+                JButton jButton = boardOfButtons[i][j];
                 if(board.isAnyPieceAt(new Position(i,j))){
-                    JButton jButton = boardOfButtons[i][j];
                     Piece piece = board.getPieceAt(new Position(i,j));
                     jButton.setText(piece.toString());
+                }else{
+                    jButton.setText("");
                 }
             }
         }

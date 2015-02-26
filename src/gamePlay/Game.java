@@ -33,6 +33,10 @@ public class Game {
         this.playerWhiteKing = null;
     }
 
+    public void setTeamPlaying(Team teamPlaying) {
+        this.teamPlaying = teamPlaying;
+    }
+
     public void initializeBoard() throws OutOfBoardException {
         initializeBlackTeam();
         initializeWhiteTeam();
@@ -114,6 +118,7 @@ public class Game {
         try {
             piece.move(newPosition);
         }catch (Exception e){
+            return;
         }
         changeTeamPlaying();
     }
@@ -257,6 +262,7 @@ public class Game {
                 }
             }
         }
+        game.setTeamPlaying(getTeamPlaying());
         return game;
     }
 }
