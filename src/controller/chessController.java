@@ -7,6 +7,7 @@ import gamePlace.Board;
 import gamePlace.Position;
 import gamePlay.Game;
 import gamePlay.Player;
+import gameTracker.GameTracker;
 import pieces.Piece;
 import view.ChessInterface;
 
@@ -28,16 +29,25 @@ public class chessController {
     private static boolean isSelected = false;
     private static int firstRank;
     private static int firstFile;
+    private static GameTracker gameTracker = new GameTracker();
 
     public chessController(Game game) {
         this.game = game;
         this.board = game.getBoard();
         defineButtonsReactions();
+        try {
+            gameTracker.addUndo(game.copy());
+        } catch (OutOfBoardException e) {
+        }
     }
 
     public static void setGame(Game game) {
         chessController.game = game;
         board = game.getBoard();
+        /*try {
+            gameTracker.addUndo(game.copy());
+        } catch (OutOfBoardException e) {
+        }*/
     }
 
     private static void defineButtonsReactions(){
@@ -99,6 +109,11 @@ public class chessController {
                             } catch (OutOfBoardException e1) {
                                 return;
                             }
+                            try {
+                                gameTracker.addUndo(game.copy());
+                                gameTracker.deleteRedo();
+                            } catch (OutOfBoardException e1) {
+                            }
                             chessInterface.updateLabels();
                             isSelected = false;
                             JButton button = chessInterface.getJButton(new Position(firstRank, firstFile));
@@ -109,7 +124,6 @@ public class chessController {
                             }
                             try {
                                 if(game.isInCheckMate(game.getTeamPlaying())){
-//                                    JOptionPane.showMessageDialog(null,"CheckMate");
                                     Object[] objects = {"restart"};
                                     JOptionPane.showOptionDialog(null, "CheckMate", "",
                                             JOptionPane.YES_NO_CANCEL_OPTION,
@@ -136,9 +150,9 @@ public class chessController {
             game.initializeBoard();
             setGame(game);
             chessInterface.setGame(game);
-            System.out.println("Bruno");
-            System.out.println(chessController.game.getBoard());
-            System.out.println(chessInterface.getGame().getBoard());
+            gameTracker.deleteRedo();
+            gameTracker.deleteUndo();
+            gameTracker.addUndo(game.copy());
         } catch (OutOfBoardException e) {
             e.printStackTrace();
         }
@@ -154,6 +168,30 @@ public class chessController {
                 }
             }
         );
+        chessInterface.getUndo().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Game game = gameTracker.getLastUndoGame();
+                if(game == null)
+                    return;
+                setGame(game);
+                chessInterface.setGame(game);
+                isSelected = false;
+                chessInterface.updateLabels();
+            }
+        });
+        chessInterface.getRedo().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Game game = gameTracker.getLastRedoGame();
+                if(game == null)
+                    return;
+                setGame(game);
+                chessInterface.setGame(game);
+                isSelected = false;
+                chessInterface.updateLabels();
+            }
+        });
     }
 
     public static void main(String[] args){
@@ -172,6 +210,10 @@ public class chessController {
                 chessInterface = new ChessInterface(game);
                 chessInterface.updateLabels();
                 setGame(game);
+                try {
+                    gameTracker.addUndo(game.copy());
+                } catch (OutOfBoardException e) {
+                }
                 defineButtonsReactions();
                 setMenuActions();
                 JFrame frame = new JFrame("Chess Game");

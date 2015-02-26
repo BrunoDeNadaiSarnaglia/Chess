@@ -149,9 +149,9 @@ public class Game {
                     game.move(position, new Position(i,j));
                     King king = game.getKing(team);
                     if(king != null && !king.isInCheck()) {
-                        System.out.println(position);
+                        /*System.out.println(position);
                         System.out.println(new Position(i,j));
-                        System.out.println(game.getBoard());
+                        System.out.println(game.getBoard());*/
                         return false;
                     }
                 } catch (InvalidPlayException e) {
